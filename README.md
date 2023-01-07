@@ -43,7 +43,6 @@ To run JUnit 5 tests through Maven, below are the main required dependencies:
 
 5) 	Assertions Methods Used
 
-
 	assertEquals(exceptedValue,actualValue)
 	assertArrayEquals
 	assertLinesMatch
