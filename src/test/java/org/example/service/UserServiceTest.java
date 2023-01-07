@@ -3,6 +3,7 @@ package org.example.service;
 
 import org.example.data.UsersRepository;
 import org.example.model.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,20 +25,32 @@ public class UserServiceTest {
     @Mock
     UsersRepository usersRepository;
 
+    @Mock
+    EmailVerificationServiceImpl emailVerificationService;
+
     //to use @InjectMocks we need to provide it on interface implementation
     @InjectMocks
     UserServiceImpl userService;
+    String firstName ;
+    String lastName ;
+    String email ;
+    String password;
+    String repeatPassword;
+    @BeforeEach
+    public void init(){
+         firstName = "Sergey";
+       lastName  = "Kargopolov";
+        email = "test@test.com";
+        password = "12345678";
+      repeatPassword = "12345678";
+
+    }
 
     @DisplayName("User object created")
     @Test
     void testCreateUser_whenUserDetailsProvided_returnsUserObject() {
         // Arrange
        // UserService userService = new UserServiceImpl(usersRepository);
-        String firstName = "Sergey";
-        String lastName  = "Kargopolov";
-        String email = "test@test.com";
-        String password = "12345678";
-        String repeatPassword = "12345678";
         //this statement needs to be added first because when mockito will execute userRepository.save(user);
         //method first we need to tell mockito what to do when you want to execute repository save method
         when(usersRepository.save(any(User.class))).thenReturn(true);
@@ -56,9 +69,6 @@ public class UserServiceTest {
         verify(usersRepository,times(1))
                 .save(any(User.class));
 
-
-
-
     }
 
     @DisplayName("save method return exception")
@@ -66,24 +76,51 @@ public class UserServiceTest {
     void testCreateUser_whenSaveMethodThrowsException_returnsUserServiceException() {
         // Arrange
         // UserService userService = new UserServiceImpl(usersRepository);
-        String firstName = "Sergey";
-        String lastName  = "Kargopolov";
-        String email = "test@test.com";
-        String password = "12345678";
-        String repeatPassword = "12345678";
-
         when(usersRepository.save(any(User.class))).thenThrow(RuntimeException.class);
-
-
-
         // Assert
         assertThrows(UserServiceException.class,()->{
             userService.createUser(firstName, lastName, email, password, repeatPassword);
         });
 
+    }
 
+    @Test
+    @DisplayName("EmailNotificationException is handled")
+    void testCreateUser_whenEmailNotificationExceptionThrown_throwsUserServiceException() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(true);
 
+        doThrow(EmailNotificationServiceException.class)
+                .when(emailVerificationService)
+                        .scheduleEmailConfirmation(any(User.class));
 
+       // doNothing().when(emailVerificationService).scheduleEmailConfirmation(any(User.class));
 
+        // Act & Assert
+        assertThrows(UserServiceException.class, ()-> {
+            userService.createUser(firstName, lastName, email, password, repeatPassword);
+        }, "Should have thrown UserServiceException instead");
+
+        // Assert
+        verify(emailVerificationService, times(1)).
+                scheduleEmailConfirmation(any(User.class));
+
+    }
+
+    @DisplayName("Schedule Email Confirmation is executed")
+    @Test
+    void testCreateUser_whenUserCreated_schedulesEmailConfirmation() {
+        // Arrange
+        when(usersRepository.save(any(User.class))).thenReturn(true);
+
+        doCallRealMethod().when(emailVerificationService)
+                .scheduleEmailConfirmation(any(User.class));
+
+        // Act
+        userService.createUser(firstName, lastName, email, password, repeatPassword);
+
+        // Assert
+        verify(emailVerificationService, times(1))
+                .scheduleEmailConfirmation(any(User.class));
     }
 }
