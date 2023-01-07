@@ -33,13 +33,14 @@ To run JUnit 5 tests through Maven, below are the main required dependencies:
     @Order @RepeatedTest @Tag @Tags`
 	
     If you want to test any method with different input values  then used this annotations
-    @ParameterizedTest
+
+   ` @ParameterizedTest
     @MethodSource("returnDifferentParameters")
 
     private static Stream<Arguments> returnDifferentParameters(){
         return Stream.of(Arguments.of(4,2),
             Arguments.of(10,5));
-    }
+    }`
 
 5) 	Assertions Methods Used
 
