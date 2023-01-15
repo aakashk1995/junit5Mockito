@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.junit.model;
 
 public class User {
     private String firstName;

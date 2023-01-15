@@ -1,8 +1,8 @@
-package org.example.service;
+package org.example.junit.service;
 
 
-import org.example.data.UsersRepository;
-import org.example.model.User;
+import org.example.junit.data.UsersRepository;
+import org.example.junit.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -131,10 +131,9 @@ public class UserServiceTest {
     @Test
     void test_insertUser(){
         //Arrange
-      UserServiceImpl userService1 =   Mockito.mock(UserServiceImpl.class);
-        System.out.println();
+      
         List<User> userList = Arrays.asList(new User(firstName,lastName,email,"user1"));
-        String userResult=   userService1.insertUser(userList.get(0));
+        String userResult=   userService.insertUser(userList.get(0));
         assertEquals("user added",userResult);
 
 //        verify(userService1,times(1))

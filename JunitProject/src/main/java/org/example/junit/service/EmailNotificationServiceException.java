@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.junit.service;
 
 public class EmailNotificationServiceException extends RuntimeException{
     public EmailNotificationServiceException(String message) {

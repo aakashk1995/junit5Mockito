@@ -1,7 +1,7 @@
-package org.example.service;
+package org.example.junit.service;
 
 
-import org.example.model.User;
+import org.example.junit.model.User;
 
 public interface UserService {
     User createUser(String firstName,

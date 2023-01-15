@@ -1,8 +1,8 @@
-package org.example.service;
+package org.example.junit.service;
 
 
-import org.example.data.UsersRepository;
-import org.example.model.User;
+import org.example.junit.data.UsersRepository;
+import org.example.junit.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
