@@ -14,6 +14,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -94,6 +97,7 @@ public class UserServiceTest {
                 .when(emailVerificationService)
                         .scheduleEmailConfirmation(any(User.class));
 
+
        // doNothing().when(emailVerificationService).scheduleEmailConfirmation(any(User.class));
 
         // Act & Assert
@@ -122,5 +126,18 @@ public class UserServiceTest {
         // Assert
         verify(emailVerificationService, times(1))
                 .scheduleEmailConfirmation(any(User.class));
+    }
+
+    @Test
+    void test_insertUser(){
+        //Arrange
+      UserServiceImpl userService1 =   Mockito.mock(UserServiceImpl.class);
+        System.out.println();
+        List<User> userList = Arrays.asList(new User(firstName,lastName,email,"user1"));
+        String userResult=   userService1.insertUser(userList.get(0));
+        assertEquals("user added",userResult);
+
+//        verify(userService1,times(1))
+//                .insertUser(any(User.class));
     }
 }

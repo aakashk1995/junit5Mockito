@@ -4,6 +4,8 @@ package org.example.service;
 import org.example.data.UsersRepository;
 import org.example.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
@@ -50,5 +52,12 @@ public class UserServiceImpl implements UserService {
 
         return user;
 
+    }
+
+    @Override
+    public String insertUser(User user) {
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
+        return "user added";
     }
 }

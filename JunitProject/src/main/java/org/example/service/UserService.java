@@ -9,4 +9,6 @@ public interface UserService {
                     String email,
                     String password,
                     String repeatPassword);
+
+    String insertUser(User user);
 }

@@ -5,6 +5,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.util.stream.Stream;
 
@@ -15,6 +17,7 @@ public class DemoTest {
 
    static int fValue1;
     static  int fValue2;
+    @Mock
     Calculator calculator;
 
     @BeforeEach
@@ -51,6 +54,11 @@ public class DemoTest {
     }
 
 
+    @Test
+    public void calculatorTest(){
+      int resut=   calculator.divide(4,2);
+        System.out.println(resut);
+    }
     @Disabled
     @Test
     public void disabledTest(){
