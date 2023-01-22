@@ -131,7 +131,7 @@ public class UserServiceTest {
     @Test
     void test_insertUser(){
         //Arrange
-      
+
         List<User> userList = Arrays.asList(new User(firstName,lastName,email,"user1"));
         String userResult=   userService.insertUser(userList.get(0));
         assertEquals("user added",userResult);

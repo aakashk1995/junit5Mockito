@@ -30,7 +30,7 @@ public class WebSecurity {
         http
                 .cors().disable()
                 .csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users")
+                .antMatchers(HttpMethod.POST, "/users/*")
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/users/login")
                 .permitAll()
