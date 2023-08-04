@@ -10,5 +10,5 @@ public interface UserService {
                     String password,
                     String repeatPassword);
 
-    String insertUser(User user);
+    void insertUser(User user);
 }

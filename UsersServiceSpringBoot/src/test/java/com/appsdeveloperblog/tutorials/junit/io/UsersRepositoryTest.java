@@ -9,6 +9,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BooleanSupplier;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 public class UsersRepositoryTest {
@@ -43,6 +48,18 @@ public class UsersRepositoryTest {
         userEntity2.setFirstName("John");
         userEntity2.setLastName("Sears");
         testEntityManager.persistAndFlush(userEntity2);
+    }
+    @Test
+    void testFindbyEmail_argument_match(){
+        // using argument checkers we can check whether right arguments are been passed to method
+        //or not
+
+        UsersRepository usersRepository1 = mock(UsersRepository.class);
+        when(usersRepository1.findByEmail(eq(email1))).thenReturn(null);
+
+        usersRepository1.findByEmail(email2);
+
+        verify(usersRepository1).findByEmail(contains(email1));
     }
 
     @Test
@@ -86,7 +103,8 @@ public class UsersRepositoryTest {
         // Assert
         Assertions.assertEquals(1, users.size(),
                 "There should be one user in the list");
-        Assertions.assertTrue(users.get(0).getEmail().endsWith(emailDomainName),
+        assertTrue(users.get(0).getEmail().endsWith(emailDomainName),
                 "User's email does not end with target domain name");
+
     }
 }

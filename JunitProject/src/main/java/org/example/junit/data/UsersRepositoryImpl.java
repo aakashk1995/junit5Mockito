@@ -23,4 +23,9 @@ public class UsersRepositoryImpl implements UsersRepository {
 
         return returnValue;
     }
+
+    @Override
+    public void insert(User user) {
+        System.out.println("adding user to database " +  user);
+    }
 }

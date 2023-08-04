@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
                            String email,
                            String password,
                            String repeatPassword) {
-
+        System.out.println("inside createUser");
         if(firstName == null || firstName.trim().length() == 0) {
             throw new IllegalArgumentException("User's first name is empty");
         }
@@ -55,9 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String insertUser(User user) {
-        List<User> userList = new ArrayList<>();
-        userList.add(user);
-        return "user added";
+    public void insertUser(User user) {
+        System.out.println("inside insert user method" + user);
+        usersRepository.insert(user);
     }
 }
